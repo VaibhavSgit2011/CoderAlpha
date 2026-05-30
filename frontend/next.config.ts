@@ -14,40 +14,36 @@ import fs from 'fs';
 // completely resolves the Webpack resolver crash.
 // =============================================================================
 
-const originalReadlink = fs.readlink;
-fs.readlink = function (path: any, options: any, callback: any) {
-  const cb = typeof options === 'function' ? options : callback;
-  const opts = typeof options === 'function' ? {} : options;
-  
-  originalReadlink(path, opts, (err, linkString) => {
-    if (err && (err.code === 'EISDIR' || err.code === 'UNKNOWN' || err.code === 'EPERM' || err.code === 'ENOTDIR')) {
-      const newErr = new Error(`EINVAL: invalid argument, readlink '${path}'`);
-      (newErr as any).code = 'EINVAL';
-      return cb(newErr);
-    }
-    cb(err, linkString);
-  });
-} as any;
+const isWindows = process.platform === 'win32';
+const isVercel = !!(process.env.VERCEL || process.env.NOW_BUILDER);
 
-const originalReadlinkSync = fs.readlinkSync;
-fs.readlinkSync = function (path: any, options: any) {
+if (isWindows && !isVercel) {
+  // Automatically require patch-fs.js on Windows mapped drives to patch spawned worker threads/child processes
   try {
-    return originalReadlinkSync(path, options);
-  } catch (err: any) {
-    if (err && (err.code === 'EISDIR' || err.code === 'UNKNOWN' || err.code === 'EPERM' || err.code === 'ENOTDIR')) {
-      const newErr = new Error(`EINVAL: invalid argument, readlink '${path}'`);
-      (newErr as any).code = 'EINVAL';
-      throw newErr;
-    }
-    throw err;
+    require('./patch-fs.js');
+  } catch (e) {
+    console.warn('[AlphaTrade FS Patch] Failed to automatically require patch-fs.js:', e);
   }
-} as any;
 
-if (fs.promises && fs.promises.readlink) {
-  const originalPromisesReadlink = fs.promises.readlink;
-  fs.promises.readlink = async function (path: any, options: any) {
+  const originalReadlink = fs.readlink;
+  fs.readlink = function (path: any, options: any, callback: any) {
+    const cb = typeof options === 'function' ? options : callback;
+    const opts = typeof options === 'function' ? {} : options;
+    
+    originalReadlink(path, opts, (err, linkString) => {
+      if (err && (err.code === 'EISDIR' || err.code === 'UNKNOWN' || err.code === 'EPERM' || err.code === 'ENOTDIR')) {
+        const newErr = new Error(`EINVAL: invalid argument, readlink '${path}'`);
+        (newErr as any).code = 'EINVAL';
+        return cb(newErr);
+      }
+      cb(err, linkString);
+    });
+  } as any;
+
+  const originalReadlinkSync = fs.readlinkSync;
+  fs.readlinkSync = function (path: any, options: any) {
     try {
-      return await originalPromisesReadlink(path, options);
+      return originalReadlinkSync(path, options);
     } catch (err: any) {
       if (err && (err.code === 'EISDIR' || err.code === 'UNKNOWN' || err.code === 'EPERM' || err.code === 'ENOTDIR')) {
         const newErr = new Error(`EINVAL: invalid argument, readlink '${path}'`);
@@ -57,6 +53,22 @@ if (fs.promises && fs.promises.readlink) {
       throw err;
     }
   } as any;
+
+  if (fs.promises && fs.promises.readlink) {
+    const originalPromisesReadlink = fs.promises.readlink;
+    fs.promises.readlink = async function (path: any, options: any) {
+      try {
+        return await originalPromisesReadlink(path, options);
+      } catch (err: any) {
+        if (err && (err.code === 'EISDIR' || err.code === 'UNKNOWN' || err.code === 'EPERM' || err.code === 'ENOTDIR')) {
+          const newErr = new Error(`EINVAL: invalid argument, readlink '${path}'`);
+          (newErr as any).code = 'EINVAL';
+          throw newErr;
+        }
+        throw err;
+      }
+    } as any;
+  }
 }
 
 const nextConfig: NextConfig = {
