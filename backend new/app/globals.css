@@ -1,0 +1,214 @@
+/* src/app/globals.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-midnight: #0a0e27;
+  --color-charcoal: #1a1f3a;
+  --color-slate: #2d3748;
+  --color-accent: #00d4ff;
+  --color-success: #10b981;
+  --color-danger: #ef4444;
+  --color-warning: #f59e0b;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-midnight);
+  font-family: 'IBM Plex Sans', sans-serif;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Space Mono', monospace;
+  font-weight: 700;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-charcoal);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-accent);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #00a8cc;
+}
+
+/* Utility classes */
+.text-accent {
+  color: var(--color-accent);
+}
+
+.bg-gradient-dark {
+  background: linear-gradient(135deg, var(--color-midnight) 0%, var(--color-charcoal) 100%);
+}
+
+.border-accent {
+  border-color: var(--color-accent);
+}
+
+.glow-accent {
+  box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+}
+
+.glow-accent-lg {
+  box-shadow: 0 0 40px rgba(0, 212, 255, 0.5);
+}
+
+/* Animations */
+@keyframes slideInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-in {
+  animation: slideInDown 0.5s ease-out;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-out;
+}
+
+.animate-slide-up {
+  animation: slideInUp 0.5s ease-out;
+}
+
+/* Cards */
+.card {
+  background: linear-gradient(135deg, rgba(26, 31, 58, 0.8) 0%, rgba(45, 55, 72, 0.5) 100%);
+  border: 1px solid rgba(0, 212, 255, 0.1);
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  border-color: rgba(0, 212, 255, 0.3);
+  box-shadow: 0 0 20px rgba(0, 212, 255, 0.2);
+}
+
+/* Buttons */
+.btn {
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border: none;
+  font-size: 0.95rem;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #00d4ff 0%, #0099cc 100%);
+  color: #0a0e27;
+}
+
+.btn-primary:hover {
+  box-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+  transform: translateY(-2px);
+}
+
+.btn-secondary {
+  background: rgba(0, 212, 255, 0.1);
+  color: #00d4ff;
+  border: 1px solid #00d4ff;
+}
+
+.btn-secondary:hover {
+  background: rgba(0, 212, 255, 0.2);
+}
+
+/* Inputs */
+.input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: rgba(0, 212, 255, 0.05);
+  border: 1px solid rgba(0, 212, 255, 0.2);
+  border-radius: 8px;
+  color: white;
+  font-family: 'IBM Plex Sans', sans-serif;
+  transition: all 0.3s ease;
+}
+
+.input:focus {
+  outline: none;
+  border-color: #00d4ff;
+  box-shadow: 0 0 10px rgba(0, 212, 255, 0.3);
+}
+
+.input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* Badges */
+.badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.badge-success {
+  background: rgba(16, 185, 129, 0.2);
+  color: #10b981;
+  border: 1px solid #10b981;
+}
+
+.badge-danger {
+  background: rgba(239, 68, 68, 0.2);
+  color: #ef4444;
+  border: 1px solid #ef4444;
+}
+
+.badge-accent {
+  background: rgba(0, 212, 255, 0.2);
+  color: #00d4ff;
+  border: 1px solid #00d4ff;
+}

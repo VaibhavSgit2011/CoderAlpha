@@ -1,0 +1,43 @@
+# Dependencies
+node_modules/
+**/node_modules/
+
+# Next.js production builds
+.next/
+**/.next/
+out/
+**/out/
+
+# Compiled code and distributions
+dist/
+**/dist/
+build/
+**/build/
+*.tsbuildinfo
+next-env.d.ts
+
+# Crucial security: Ignore environment variables and private database keys
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+**/.env
+**/.env.local
+**/*.env
+*.pem
+Firebase Private Key.json
+**/Firebase Private Key.json
+
+# Operating System & Editors
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Logging
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+.vercel

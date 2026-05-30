@@ -1,0 +1,8 @@
+export default function Home() {
+  return (
+    <div style={{ padding: '40px', color: 'white', background: '#0a0a0a', minHeight: '100vh' }}>
+      <h1 style={{ fontSize: '32px', fontWeight: 'bold' }}>✅ AlphaTrade AI — Next.js 15 is working!</h1>
+      <p style={{ marginTop: '16px', color: '#888' }}>If you can see this, the server-side rendering is fully functional.</p>
+    </div>
+  );
+}

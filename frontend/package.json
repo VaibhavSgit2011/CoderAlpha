@@ -1,0 +1,32 @@
+{
+  "name": "frontend",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "node -r ./patch-fs.js node_modules/next/dist/bin/next dev",
+    "build": "node -r ./patch-fs.js node_modules/next/dist/bin/next build",
+    "start": "node -r ./patch-fs.js node_modules/next/dist/bin/next start",
+    "lint": "eslint"
+  },
+  "dependencies": {
+    "firebase": "^11.10.0",
+    "lucide-react": "^0.525.0",
+    "next": "^15.5.18",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6",
+    "react-icons": "^5.6.0",
+    "recharts": "^2.15.4"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19.2.15",
+    "@types/react-dom": "^19.2.3",
+    "enhanced-resolve": "^5.22.0",
+    "eslint": "^9",
+    "eslint-config-next": "^15.0.0",
+    "lightningcss-win32-x64-msvc": "^1.32.0",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  }
+}
